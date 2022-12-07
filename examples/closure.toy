@@ -1,0 +1,17 @@
+[intSeq] = {
+    i = 0
+    [nextInt] = {
+        i = (i + 1)
+        return i
+    }
+    return @[nextInt]
+}
+
+[nextInt] = [intSeq]
+
+[printLine: [nextInt]]
+[printLine: [nextInt]]
+[printLine: [nextInt]]
+
+[newInts] = [intSeq]
+[printLine: [newInts]]

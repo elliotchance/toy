@@ -1,0 +1,5 @@
+a = "initial"
+[printLine: a]
+
+b = 12.34
+[printLine: b]

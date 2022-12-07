@@ -1,0 +1,48 @@
+Rect {
+    width: Number,
+    height: Number
+}
+
+Circle {
+    radius: Number
+}
+
+[areaOf:Rect(r) and:Cirle(c)] {
+    [measure:r]
+    [measure:c]
+}
+
+[areaOf:Rect(r)]: Number = {
+    return (areaOf.width * areaOf.height)
+}
+
+[perimOf:$Rect]: number = {
+    return (areaOf.width * areaOf.height)
+}
+
+[areaOf:$Circle]: number = {
+    return (areaOf.width * areaOf.height)
+}
+
+[perimOf:$Circle]: number = {
+    return (areaOf.width * areaOf.height)
+}
+
+Geometry {
+    [areaOf:Geometry]: Number
+    [perimOf:Geometry]: Number
+}
+
+[measure:Geometry(g)]: Number = {
+    [printLine:[stringOf:g]]
+    [printLine:[areaOf:g]]
+    [printLine:[perimOf:g]]
+}
+
+[main] = {
+    r = Rect{width: 3, height: 4}
+    c = Circle{radius: 5}
+
+    [measure:r]
+    [measure:c]
+}

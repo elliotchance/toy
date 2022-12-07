@@ -1,0 +1,6 @@
+data = [readFile:"toy.js"]
+[printLine: data]
+
+f = [openFile:"toy.js"]
+b1 = [readBytes:5 from:f]
+[printLine: b1]

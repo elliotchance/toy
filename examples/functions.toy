@@ -1,0 +1,15 @@
+[plus:Number b:Number] = {
+    return (plus + b)
+}
+
+[plusPlus:Number b:Number c:Number] = {
+    return (plusPlus + (b + c))
+}
+
+res = [plus:1 b:2]
+[print:"1+2 = "]
+[printLine:res]
+
+res = [plusPlus:1 b:2 c:3]
+[print:"1+2+3 = "]
+[printLine:res]

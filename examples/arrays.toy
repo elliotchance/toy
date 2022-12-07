@@ -1,0 +1,13 @@
+s = [arrayOf:String size:3]
+[printLine: s]
+
+[on:s set:"a" at:0]
+[on:s set:"b" at:1]
+[on:s set:"c" at:2]
+[printLine: s]
+[printLine: [on:s at:2]]
+
+[printLine: [len:s]]
+
+s = [append:"d" onto:s]
+[printLine: s]
