@@ -1,0 +1,13 @@
+package main
+
+import "fmt"
+
+{{repeat:100000}}
+func f{{n}}(a, b int) int {
+    return a + b
+}
+{{end}}
+
+func main() {
+  fmt.Println("Hello, World!")
+}

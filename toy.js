@@ -111,7 +111,7 @@ function consumeStatement(tokens, block) {
     consume(tokens, "=");
     return {
       t: "assign",
-      name: expr.f.replace(/:/g, () => ":" + expr.a.shift().value),
+      name: '[' + expr.pairs.map(p => p[0] + ':' + p[2].value).join(' ') + ']',
       value: consumeExpression(block, tokens),
     };
   }
@@ -156,7 +156,7 @@ function consumeExpression(block, tokens) {
       return { t: tokens.peek().t, value: tokens.next().value };
 
     case "[":
-      return consumeCall(block, tokens, true);
+      return consumeCall(block, tokens);
 
     case "(":
       return consumeBinaryExpression(block, tokens);
@@ -169,25 +169,29 @@ function consumeExpression(block, tokens) {
   }
 }
 
-function consumeCall(block, tokens, isCall) {
+function consumePair(block, tokens) {
+  let result = [];
+  result[0] = result[1] = consume(tokens, "word").value;
+  consume(tokens, ":");
+  if (tokens.peek().t === "(") {
+    tokens.next() // skip (
+    result[1] = consume(tokens, "word").value;
+    consume(tokens, ')');
+  }
+  result[2] = consumeExpression(block, tokens);
+  return result;
+}
+
+function consumeCall(block, tokens) {
   consume(tokens, "[");
-  let a = [];
-  let func = consume(tokens, "word").value;
+  let pairs = [];
 
-  if (tokens.peek().t === ":") {
-    func += ":";
-    consume(tokens, ":");
-    if (isCall) a.push(consumeExpression(block, tokens));
-
-    while (tokens.peek().t !== "]") {
-      func += " " + consume(tokens, "word").value + ":";
-      consume(tokens, ":");
-      if (isCall) a.push(consumeExpression(block, tokens));
-    }
+  while (tokens.peek().t !== "]") {
+    pairs.push(consumePair(block, tokens));
   }
 
   consume(tokens, "]");
-  return { t: "call", f: `[${func}]`, a };
+  return {t: 'call', pairs};
 }
 
 function consumeBinaryExpression(block, tokens) {
@@ -202,7 +206,7 @@ function consumeBinaryExpression(block, tokens) {
 
 function consumeRef(tokens) {
   consume(tokens, "@");
-  return { t: "var", value: consumeCall(null, tokens, false).f };
+  return { t: "var", value: consumeCall(null, tokens).f };
 }
 
 function runProgram(program) {
@@ -248,15 +252,15 @@ function runWhile(block, stmt) {
 }
 
 function runCall(block, stmt) {
-  let args = stmt.a.map((e) => runExpression(block, e));
-  let types = args.map((a) => a.t);
-  const realType = stmt.f.replace(/:/g, () => ":" + types.shift());
+  let args = stmt.pairs.map((pair) => runExpression(block, pair[2]));
+  const realType = '[' + stmt.pairs.map((pair) => pair[0] + ':' + args.shift().t).join(' ') + ']';
 
-  try {
+  // try {
     const b = findVariable(block, realType);
-    stmt.f.match(/[^\s:\[\]]+/g).forEach((v) => (b.vars[v] = args.shift()));
+    console.log(stmt, realType, b);
+    // stmt.pairs.map((p) => (b.vars[v] = args.shift()));
     return runBlock(b);
-  } catch (e) {}
+  // } catch (e) {}
 
   if (functions[realType]) {
     return functions[realType](args);
@@ -362,6 +366,7 @@ for (const path of process.argv.slice(2)) {
 
     const tokens = tokenize(data);
     const program = parse(tokens);
-    runProgram(program);
+    console.log(program);
+    // runProgram(program);
   });
 }

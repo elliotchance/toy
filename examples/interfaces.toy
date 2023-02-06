@@ -1,42 +1,39 @@
-Rect {
-    width: Number,
+use math
+
+Rect = {
+    width: Number
     height: Number
 }
 
-Circle {
+[area:(r)Rect]: Number = {
+    return ([width:r] * [height:r])
+}
+
+[perim:(r)Rect]: Number = {
+    return ([width:r] * [height:r])
+}
+
+Circle = {
     radius: Number
 }
 
-[areaOf:Rect(r) and:Cirle(c)] {
-    [measure:r]
-    [measure:c]
+[area:(r)Circle]: number = {
+    return ([pi] * ([radius:c] * [radius:c]))
 }
 
-[areaOf:Rect(r)]: Number = {
-    return (areaOf.width * areaOf.height)
+[perim:(c)Circle]: number = {
+    return (2 * ([pi] * [radus:c]))
 }
 
-[perimOf:$Rect]: number = {
-    return (areaOf.width * areaOf.height)
-}
-
-[areaOf:$Circle]: number = {
-    return (areaOf.width * areaOf.height)
-}
-
-[perimOf:$Circle]: number = {
-    return (areaOf.width * areaOf.height)
-}
-
-Geometry {
+Geometry = {
     [areaOf:Geometry]: Number
     [perimOf:Geometry]: Number
 }
 
-[measure:Geometry(g)]: Number = {
-    [printLine:[stringOf:g]]
-    [printLine:[areaOf:g]]
-    [printLine:[perimOf:g]]
+[measure:(g)Geometry]: Number = {
+    [printLine:[json:g]]
+    [printLine:[area:g]]
+    [printLine:[perim:g]]
 }
 
 [main] = {

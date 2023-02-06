@@ -1,9 +1,9 @@
-[plus:Number b:Number] = {
-    return (plus + b)
+@[plus:(a)Number b:Number]: Number = {
+    < (a + b)
 }
 
-[plusPlus:Number b:Number c:Number] = {
-    return (plusPlus + (b + c))
+@[plusPlus:(a)Number b:Number c:Number]: Number = {
+    < (a + (b + c))
 }
 
 res = [plus:1 b:2]

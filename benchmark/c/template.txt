@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+{{repeat:100000}}
+int f{{n}}(int a, int b) {
+    return a + b;
+}
+{{end}}
+
+int main() {
+  printf("Hello, World!\n");
+  return 0;
+}

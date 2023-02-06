@@ -1,0 +1,7 @@
+{{repeat:10000}}
+@[f{{n}}a:Number b:Number]: Number = {
+    < (a + b)
+}
+{{end}}
+
+[printLine:"Hello, World!"];

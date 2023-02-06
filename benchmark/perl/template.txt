@@ -1,0 +1,7 @@
+{{repeat:100000}}
+sub f{{n}} {
+    return $0 + $1;
+}
+{{end}}
+
+print "Hello, World!\n"
